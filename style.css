@@ -1,0 +1,304 @@
+@import url('https://fonts.googleapis.com/css2?family=ADLaM+Display&family=Handjet:wght@100&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    user-select: none;
+}
+
+:root {
+    --text-color: #0b0404;
+    --bg-color: #fefbfb;
+    --primary-color: #511f1f;
+    --secondary-color: #f1dada;
+    --accent: #b94646;
+
+    --x-primary-color: #511f1f;
+    --x-secondary-color: #b94646;
+
+    --o-primary-color: #2c3f2e;
+    --o-secondary-color: #adf1a2;
+}
+
+:root.dark-mode {
+    --text-color: #fefbfb;
+    --bg-color: #0b0404;
+    --primary-color: #421919;
+    --secondary-color: #250e0e;
+    --accent: #e3b5b5;
+
+    --x-primary-color: #b94646; 
+    --x-secondary-color: #511f1f; 
+
+    --o-primary-color: #adf1a2; 
+    --o-secondary-color: #2c3f2e;
+}
+
+
+body {
+    display: flex;
+    height: 100dvh;
+    width: 100dvw;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    background-color: var(--bg-color);
+}
+
+h1 {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+    font-family: 'Handjet', sans-serif;
+    font-size: 7rem;
+    color: var(--text-color);
+    font-weight: 900;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 200px);
+    grid-template-rows: repeat(3, 200px);
+    gap: 0.2rem;
+    font-size: 7.5rem;
+    border: 0.30rem solid var(--primary-color);
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-color);
+    cursor: inherit;
+}
+
+.filled-x {
+    position: relative;
+    background-color: var(--x-secondary-color);
+    color: var(--x-primary-color);
+}
+
+.filled-o {
+    background-color: var(--o-secondary-color);
+    color: var(--o-primary-color);
+}
+
+.filled-x::after {
+    font-family: 'Font Awesome 6 Free';
+    content: '\58';
+    font-weight: 900;
+}
+
+.filled-o::after {
+    font-family: 'Font Awesome 6 Free';
+    content: '\4f';
+    font-weight: 900;
+}
+
+button {
+    display: flex;
+    padding: 0.45rem 2rem;
+    align-items: center;
+    gap: 0.50rem;
+    top: 1rem;
+    left: 1rem;
+    font-size: 1.25rem;
+    color: var(--text-color);
+    border: 1px solid var(--primary-color);
+    background-color: var(--bg-color);
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-family: 'Bebas Neue', sans-serif;
+}
+
+button:hover {
+    background-color: var(--secondary-color);
+    filter: brightness(90%);
+}
+
+section:hover:not(.filled-o, .filled-x) {
+    opacity: 80%;
+}
+
+.x-cursor {
+    cursor: url(x-icon.png), auto;
+}
+
+.o-cursor {
+    cursor: url(o-icon.png), auto;
+}
+
+.shake {
+    animation-name: shake;
+    animation-duration: 0.150s;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes shake {
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    75% { transform: translateX(-10px); }
+    100% { transform: translateX(0); }
+}
+
+.close {
+    display:none;
+}
+
+dialog {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+    width: 100vw;
+    height: 100vh;
+    z-index: 10;
+    backdrop-filter: blur(20px);
+    background: none;
+    border: none;
+    gap: 2rem;
+}
+
+dialog > span > button {
+    background: none;
+}
+
+
+dialog > main {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100dvw;
+    justify-content: center;
+    gap: 1rem;
+}
+
+dialog > main > div {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 1.50rem;
+    height: 200px;
+    width: 200px;
+    border: solid 1px var(--primary-color);
+    backdrop-filter: blur();
+    border-radius: 0.35rem;
+    font-family: 'Bebas Neue', sans-serif;
+    color: var(--text-color);
+    font-size: 1.25rem;
+}
+
+input {
+    background: none;
+    padding: 0.25rem;
+    border: 2px solid var(--primary-color);
+    color: var(--text-color);
+    opacity: 90%;
+    border-radius: 0.25rem;
+}
+
+input:disabled {
+    opacity: 50%;
+    background-color: var(--bg-color);
+    user-select: none;
+}
+
+
+input:focus:not(input[type='radio'], input[type='checkbox']) {
+    outline: none;
+    box-shadow: 0px 0px 5px 1px var(--text-color);
+}
+
+label {
+    margin-top: 1rem;
+    margin-bottom: 0.25rem;
+    font-size: 1rem;
+}
+
+input[type='radio'] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    appearance: none;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 0px;
+}
+
+span {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 10px;
+    padding-bottom: 2rem;
+}
+
+input[type='radio']:nth-child(even)::after {
+    font-family: 'Font Awesome 6 Free';
+    content: '\4f';
+    font-weight: 900;
+}
+
+input[type='radio']:nth-child(odd)::after {
+    font-family: 'Font Awesome 6 Free';
+    content: '\58';
+    font-weight: 900;
+}
+
+input[type='radio']:checked {
+    background-color: var(--text-color);
+    color: var(--bg-color);
+    outline: none;
+}
+
+p {
+    font-family: 'Bebas Neue', sans-serif;
+    color: var(--text-color);
+}
+
+input[type='checkbox'] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    appearance: none;
+    width: 4rem;
+    height: 1.75rem;
+    background-color: none;
+    color: var(--text-color);
+    font-size: 0.75rem;
+    font-weight: 700;
+    background-color: none;
+    bottom: 1rem;
+    opacity: 100%;
+}
+
+input[type='checkbox']:checked {
+    background-color: var(--text-color);
+    opacity: 90%;
+}
+
+input[type='checkbox']:checked::after {
+    content: "AI ON";
+    color: var(--bg-color);
+}
+
+input[type='checkbox']::after {
+    content: 'AI OFF';
+}
+
+
+
+

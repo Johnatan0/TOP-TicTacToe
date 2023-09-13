@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="">
+<html lang="en" class="dark-mode">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,7 +11,7 @@
 </head>
 <body>
 
-    <dialog>
+    <dialog class="">
 
     <h1>Tic tac toe</h1>
 
@@ -19,7 +19,7 @@
         <div>
             <p>Player 1</p>
             <label for="playername1">Player name: </label>
-            <input type="text" id="playername1" placeholder="Player 1">
+            <input type="text" id="playername1" placeholder="Player 1" maxlength="10">
             <label for="player-select1">Select your icon:</label>
             <span>
             <input type="radio" name="player1-select" id="player-select1" value='x' checked>
@@ -30,7 +30,7 @@
             <p>Player 2</p>
             <input type="checkbox" id="ai-checkbox">
             <label for="playername2">Player name: </label>
-            <input type="text" id="playername2" placeholder="Player 2">
+            <input type="text" id="playername2" placeholder="Player 2" maxlength="10">
             <label for="player-select2">Select your icon:</label>
 
             <span>
@@ -41,18 +41,25 @@
     </main>
     <span>
         <button id="play-btn">PLAY</button>
-        <button class="toggle-dm"> Dark mode<i class="fa-solid fa-droplet"></i> </button>
+        <button class="toggle-dm"> Change theme<i class="fa-solid fa-droplet"></i> </button>
     </span>
     </dialog>
-
+    
     <h1>Tic tac toe</h1>
 
-    <button class="toggle-dm"> Dark mode<i class="fa-solid fa-droplet"></i> </button>
-    
     <aside>
-        <p>Player 1</p>
-        <p>Player 2</p>
+        <h3>SCOREBOARD</h3>
+        <div>
+            <h4 class="player-name"></h4>
+            <div class="score">0</div>
+        </div>
+        <div>
+            <h4 class="player-name"></h4>
+            <div class="score">0</div>
+        </div>
     </aside>
+
+    <h5 class="close"></h5>
 
     <div class="grid">
         <section data-pos="0"></section>
@@ -65,6 +72,11 @@
         <section data-pos="7"></section>
         <section data-pos="8"></section>
     </div>
+
+    <nav>
+        <button class="toggle-dm"> Change theme<i class="fa-solid fa-droplet"></i> </button>
+        <button class="reset-btn">RESET</button>
+    </nav>
 
     <audio src="erro.mp3"></audio>
 </body>

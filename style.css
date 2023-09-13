@@ -13,7 +13,7 @@
     --bg-color: #fefbfb;
     --primary-color: #511f1f;
     --secondary-color: #f1dada;
-    --accent: #b94646;
+    --accent: #ffffff;
 
     --x-primary-color: #511f1f;
     --x-secondary-color: #b94646;
@@ -55,15 +55,15 @@ h1 {
     width: 100%;
     text-align: center;
     font-family: 'Handjet', sans-serif;
-    font-size: 7rem;
+    font-size: 6rem;
     color: var(--text-color);
     font-weight: 900;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(3, 200px);
-    grid-template-rows: repeat(3, 200px);
+    grid-template-columns: repeat(3, clamp(2rem,30dvw,12rem));
+    grid-template-rows: repeat(3, clamp(2rem,30dvw,12rem));
     gap: 0.2rem;
     font-size: 7.5rem;
     border: 0.30rem solid var(--primary-color);
@@ -95,12 +95,17 @@ section {
     font-family: 'Font Awesome 6 Free';
     content: '\58';
     font-weight: 900;
+    font-size: clamp(4.5rem, 15vw, 7rem);
+    background: inherit;
+    transition: 750ms;
 }
 
 .filled-o::after {
     font-family: 'Font Awesome 6 Free';
     content: '\4f';
     font-weight: 900;
+    font-size: clamp(4.5rem, 15vw, 7rem);
+    background: inherit;
 }
 
 button {
@@ -110,11 +115,11 @@ button {
     gap: 0.50rem;
     top: 1rem;
     left: 1rem;
-    font-size: 1.25rem;
+    font-size: calc(1rem + 0.1vw);
     color: var(--text-color);
     border: 1px solid var(--primary-color);
     background-color: var(--bg-color);
-    border-radius: 0.25rem;
+    border-radius: 0.15rem;
     cursor: pointer;
     font-family: 'Bebas Neue', sans-serif;
 }
@@ -299,6 +304,74 @@ input[type='checkbox']::after {
     content: 'AI OFF';
 }
 
+nav {
+    display: flex;
+    gap: 1rem;
+}
+
+.opacity {
+    opacity: 0%;
+}
+
+aside {
+    display: flex;
+    flex-wrap: wrap;
+    width: fit-content;
+    justify-content: center;
+    align-content: center;
+    font-size: 1rem;
+    border-radius: 0.15rem;
+    border: solid 2px var(--primary-color);
+    background-color: var(--secondary-color);
+}
+
+
+
+h3 {
+    padding: 0.50rem 0;
+    text-align: center;
+    width: 85%;
+    color: var(--text-color);
+    font-family: 'Bebas Neue', sans-serif;
+    border-bottom: solid 1px var(--primary-color);
+    font-size: 1.25rem;
+}
+
+h4 {
+    font-size: 1.05rem;
+    font-family: 'Bebas Neue', sans-serif;
+    padding: 0.50rem 1rem;
+    color: var(--text-color);
+}
+
+.event-disable {
+    pointer-events: none;
+}
+
+.match {
+    transition: 1000ms;
+    transform: scale(0.85);
+    filter: drop-shadow(0px 0px 10px var(--accent));
+    border-radius: 10px;
+}
+
+.score {
+    font-family: 'Bebas Neue', sans-serif;
+    text-align: center;
+    color: var(--text-color);
+    padding-bottom: 0.50rem;
+}
+
+h5 {
+    color: var(--text-color);
+    font-family: 'Bebas Neue', sans-serif;
+    background-color: var(--secondary-color);
+    padding: 1rem 3rem;
+    font-size: 1.25rem;
+    border: solid 2px var(--primary-color);
+    border-radius: 10px;
+    text-align: center;
+}
 
 
 

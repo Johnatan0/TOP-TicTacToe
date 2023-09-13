@@ -30,23 +30,166 @@ const DOM = (() => {
         DOM.RadiobtnChecked = document.querySelectorAll('input[type="radio"]:checked');
     };
 
-    return {RadiobtnChecked};
+    function shake() {
+        document.querySelector('.grid').classList.add('shake');
+
+        setTimeout(() => document.querySelector('.grid').classList.remove('shake'), 150);
+    }
+
+    return {RadiobtnChecked, shake};
 })();
 
-const Player = (() => {
+const Player = (function(){
 
-    const playbtn = document.querySelector('#play-btn');
-    playbtn.addEventListener('click', () => {
-        Player.p1 = _createPlayer(document.querySelector('#playername1').value, DOM.RadiobtnChecked[0].value);
-        (Player.p1.name === '') ? Player.p1.name = "Player 1" : '' ;
-        Player.p2 = _createPlayer(document.querySelector('#playername2').value, DOM.RadiobtnChecked[1].value);
-        (Player.p2.name === '') ? Player.p2.name = "Player 2" : '' ;
-        console.log(Player);
-    })
-    
-    function _createPlayer(name, icon){
-        return {name, icon};
+    function _createPlayer(name, icon, points){
+        return {name, icon, points};
     };
 
-    return {};
+    const _playbtn = document.querySelector('#play-btn');
+    const playername = document.querySelectorAll('.player-name');
+    _playbtn.addEventListener('click', () => { 
+        
+        Player.p1 = _createPlayer(document.querySelector('#playername1').value, DOM.RadiobtnChecked[0].value, 0);
+        if(Player.p1.name === '') Player.p1.name = "Player 1";
+        playername[0].textContent = Player.p1.name;
+        
+        Player.p2 = _createPlayer(document.querySelector('#playername2').value, DOM.RadiobtnChecked[1].value, 0);
+        if(Player.p2.name === '') Player.p2.name = "Player 2";
+        playername[1].textContent = Player.p2.name;
+        
+        document.querySelector('dialog').classList.add('close');
+        
+        (Player.p1.icon === 'x') ? Player.Selected = Player.p1 : Player.Selected = Player.p2;
+
+        Player.switchPlayer = switchPlayer;
+    });
+
+
+
+    function switchPlayer() {
+        (Player.Selected.name === Player.p1.name) ? Player.Selected = Player.p2 : Player.Selected = Player.p1;
+    }
+
+    return {}
 })();
+
+const Gb = (function() {
+    
+    const board = ['null', 'null', 'null',
+                   'null', 'null', 'null',
+                   'null', 'null', 'null',];
+    
+    const _slot = document.querySelectorAll('section');
+    _slot.forEach(slot => slot.addEventListener('click', _fillBoard));
+    
+    function _updateBoard() {
+        for(let i=0; i < 9; i++){
+            if(board[i] === 'null') _slot[i].removeAttribute('class'); 
+            if(board[i] === 'x') _slot[i].classList.add('filled-x'); 
+            if(board[i] === 'o') _slot[i].classList.add('filled-o');
+        };
+    }
+
+    function _fillBoard() {
+        if(this.classList.value) return DOM.shake();
+        if(!this.classList.value){
+            board[this.dataset.pos] = Player.Selected.icon;
+            _checkVictory();
+            Player.switchPlayer();
+            _updateBoard();
+            checkTie();
+        };
+    }
+
+    const resetbtn = document.querySelector('.reset-btn');
+    resetbtn.addEventListener('click', _resetPoints)
+
+    function _resetPoints(){
+        for(let i=0; i<9; i++){board[i] = 'null'};
+
+        Player.p1.points = 0;
+        Player.p2.points = 0;
+
+        document.querySelectorAll('.score')[0].textContent = Player.p1.points;
+        document.querySelectorAll('.score')[1].textContent = Player.p2.points;
+
+        (Player.p1.icon === 'x') ? Player.Selected = Player.p1 : Player.Selected = Player.p2;
+        document.querySelector('.grid').classList.remove('close');
+        document.querySelector('h5').classList.add('close');
+        _updateBoard();
+    }
+
+    function _reset() {
+        for(let i=0; i<9; i++){board[i] = 'null'};
+        Player.switchPlayer();
+        _updateBoard();
+    };
+
+    function checkTie() {
+        for(let i=0; i < 9; i++){
+            if(board[i] === "null"){
+                return false;
+            }
+        }
+        return _reset();
+    }
+
+    function _checkVictory(){
+
+        const score = document.querySelectorAll('.score')
+        let boardCheck = (a, b, c) => board[a] === board[b] && board[b] === board[c] && board[a] != 'null';
+
+        function validateVictory(){
+            (Player.Selected.name === Player.p1.name) ? Player.p1.points = ++Player.p1.points : Player.p2.points = ++Player.p2.points;
+            document.querySelector('.grid').classList.add('event-disable');
+            setTimeout(() => document.querySelector('.grid').classList.remove('event-disable'), 2000);
+            setTimeout(_reset, 2000);
+
+            score[0].textContent = Player.p1.points;
+            score[1].textContent = Player.p2.points;
+        }
+
+        function matchColor(a, b, c){
+            _slot[a].classList.add('match');
+            setTimeout(() => _slot[b].classList.add('match'), 250)
+            setTimeout(() => _slot[c].classList.add('match'), 500)
+        }
+
+        //Horizontal Lines
+        if(boardCheck(0, 1, 2)) {validateVictory(); matchColor(0,1,2)};
+        if(boardCheck(3, 4, 5)) {validateVictory(); matchColor(3,4,5)}
+        if(boardCheck(6, 7, 8)) {validateVictory(); matchColor(6,7,8)}
+
+        //Vertical Lines
+        if(boardCheck(0, 3, 6)) {validateVictory(); matchColor(0,3,6)}
+        if(boardCheck(1, 4, 7)) {validateVictory(); matchColor(1,4,7)}
+        if(boardCheck(2, 5, 8)) {validateVictory(); matchColor(2,5,8)}
+
+        //Diagonal Lines
+        if(boardCheck(0, 4, 8)) {validateVictory(); matchColor(0,4,8)}
+        if(boardCheck(2, 4, 6)) {validateVictory(); matchColor(2,4,6)}
+
+
+        if(Player.p1.points > 3) {
+            setTimeout(() => {
+            document.querySelector('.grid').classList.add('close');
+            document.querySelector('h5').classList.remove('close');
+            document.querySelector('h5').textContent = Player.p1.name + " won the match! 🎉🎉"
+            }, 2000);
+        }
+
+        if(Player.p2.points > 3) {
+            setTimeout(() => {
+            document.querySelector('.grid').classList.add('close');
+            document.querySelector('h5').classList.remove('close');
+            document.querySelector('h5').textContent = Player.p2.name + " won the match! 🎉🎉"
+            }, 2000);
+            
+        }
+
+    }
+
+
+})();
+
+

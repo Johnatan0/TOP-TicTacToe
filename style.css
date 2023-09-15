@@ -45,6 +45,7 @@ body {
     align-items: center;
     flex-direction: column;
     background-color: var(--bg-color);
+    box-sizing: border-box;
 }
 
 h1 {
@@ -156,7 +157,7 @@ section:hover:not(.filled-o, .filled-x) {
 }
 
 .close {
-    display:none;
+    display: none;
 }
 
 dialog {
@@ -373,5 +374,18 @@ h5 {
     text-align: center;
 }
 
+.fade {
+    transition: 1000ms;
+    background-color: var(--secondary-color);
+    filter: drop-shadow(0px 0px 0px var(--bg-color));
+    border-radius: 0;
+    transform: scale(1);
+}
+
+.fade::after {
+    transition: 1000ms;
+    opacity: 0%;
+    background-color: var(--secondary-color);
+}
 
 

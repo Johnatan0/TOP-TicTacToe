@@ -94,10 +94,10 @@ const Gb = (function() {
         if(this.classList.value) return DOM.shake();
         if(!this.classList.value){
             board[this.dataset.pos] = Player.Selected.icon;
+            checkTie();
             _checkVictory();
             Player.switchPlayer();
             _updateBoard();
-            checkTie();
         };
     }
 
@@ -121,7 +121,7 @@ const Gb = (function() {
 
     function _reset() {
         for(let i=0; i<9; i++){board[i] = 'null'};
-        Player.switchPlayer();
+        (Player.p1.icon === 'x') ? Player.Selected = Player.p1 : Player.Selected = Player.p2;
         _updateBoard();
     };
 
@@ -142,17 +142,19 @@ const Gb = (function() {
         function validateVictory(){
             (Player.Selected.name === Player.p1.name) ? Player.p1.points = ++Player.p1.points : Player.p2.points = ++Player.p2.points;
             document.querySelector('.grid').classList.add('event-disable');
-            setTimeout(() => document.querySelector('.grid').classList.remove('event-disable'), 2000);
-            setTimeout(_reset, 2000);
+            setTimeout(() => document.querySelector('.grid').classList.remove('event-disable'), 3000);
+            setTimeout(_reset, 3000);
 
             score[0].textContent = Player.p1.points;
             score[1].textContent = Player.p2.points;
         }
 
         function matchColor(a, b, c){
-            _slot[a].classList.add('match');
-            setTimeout(() => _slot[b].classList.add('match'), 250)
-            setTimeout(() => _slot[c].classList.add('match'), 500)
+            setTimeout(() => _slot[a].classList.add('match'), 100)
+            setTimeout(() => _slot[b].classList.add('match'), 400)
+            setTimeout(() => _slot[c].classList.add('match'), 700)
+
+            setTimeout(() => _slot.forEach(slot => slot.classList.add('fade')), 2000)
         }
 
         //Horizontal Lines
@@ -175,7 +177,7 @@ const Gb = (function() {
             document.querySelector('.grid').classList.add('close');
             document.querySelector('h5').classList.remove('close');
             document.querySelector('h5').textContent = Player.p1.name + " won the match! 🎉🎉"
-            }, 2000);
+            }, 2500);
         }
 
         if(Player.p2.points > 3) {

@@ -82,12 +82,13 @@ section {
 }
 
 .filled-x {
+    transition: 500ms;
     position: relative;
     background-color: var(--x-secondary-color);
-    color: var(--x-primary-color);
 }
 
 .filled-o {
+    transition: 500ms;
     background-color: var(--o-secondary-color);
     color: var(--o-primary-color);
 }
@@ -97,8 +98,7 @@ section {
     content: '\58';
     font-weight: 900;
     font-size: clamp(4.5rem, 15vw, 7rem);
-    background: inherit;
-    transition: 750ms;
+    color: var(--x-primary-color);
 }
 
 .filled-o::after {
@@ -107,6 +107,7 @@ section {
     font-weight: 900;
     font-size: clamp(4.5rem, 15vw, 7rem);
     background: inherit;
+    color: var(--o-primary-color);
 }
 
 button {
@@ -307,6 +308,8 @@ input[type='checkbox']::after {
 
 nav {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 1rem;
 }
 
@@ -383,9 +386,31 @@ h5 {
 }
 
 .fade::after {
-    transition: 1000ms;
+    transition: 200ms;
     opacity: 0%;
-    background-color: var(--secondary-color);
 }
 
+.tie {
+    position: fixed;
+    color: var(--text-color);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 8rem;
+    text-shadow: 0px 0px 50px var(--text-color);
+}
 
+.tie-animation {
+    transition: 400ms;
+    transform: rotate(360deg);
+}
+
+.icon-x {
+    cursor: url(x-icon.png), auto;
+}
+
+.icon-o {
+    cursor: url(o-icon.png), auto;
+}
+
+.no-cursor {
+    cursor: none;
+}

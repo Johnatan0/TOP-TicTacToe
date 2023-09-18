@@ -53,7 +53,6 @@
             <h4 class="player-name"></h4>
             <div class="score">0</div>
         </div>
-        <div class="turn">STATUS</div>
         <div>
             <h4 class="player-name"></h4>
             <div class="score">0</div>
@@ -62,7 +61,7 @@
 
     <h5 class="close"></h5>
 
-    <div class="grid">
+    <div class="grid icon-x">
         <section data-pos="0"></section>
         <section data-pos="1"></section>
         <section data-pos="2"></section>
@@ -76,8 +75,11 @@
 
     <nav>
         <button class="toggle-dm"> Change theme<i class="fa-solid fa-droplet"></i> </button>
-        <button class="reset-btn">RESET</button>
+        <button class="reset-btn">Restart match</button>
+        <button onclick="window.location.reload()" class="reload">Player Menu</button>
     </nav>
+
+    <div class="tie close">TIE</div>
 
     <audio src="erro.mp3"></audio>
 </body>

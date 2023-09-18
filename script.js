@@ -68,9 +68,17 @@ const Player = (function(){
 
     function switchPlayer() {
         (Player.Selected.name === Player.p1.name) ? Player.Selected = Player.p2 : Player.Selected = Player.p1;
+
+        if(Player.Selected.icon === 'x'){
+            document.querySelector('.grid').classList.add('icon-x');
+            document.querySelector('.grid').classList.remove('icon-o')
+        } else {
+            document.querySelector('.grid').classList.add('icon-o');
+            document.querySelector('.grid').classList.remove('icon-x')
+        }
     }
 
-    return {}
+    return {switchPlayer}
 })();
 
 const Gb = (function() {
@@ -78,6 +86,8 @@ const Gb = (function() {
     const board = ['null', 'null', 'null',
                    'null', 'null', 'null',
                    'null', 'null', 'null',];
+
+    let _boardFull = false;
     
     const _slot = document.querySelectorAll('section');
     _slot.forEach(slot => slot.addEventListener('click', _fillBoard));
@@ -94,8 +104,8 @@ const Gb = (function() {
         if(this.classList.value) return DOM.shake();
         if(!this.classList.value){
             board[this.dataset.pos] = Player.Selected.icon;
-            checkTie();
             _checkVictory();
+            checkTie();
             Player.switchPlayer();
             _updateBoard();
         };
@@ -122,16 +132,25 @@ const Gb = (function() {
     function _reset() {
         for(let i=0; i<9; i++){board[i] = 'null'};
         (Player.p1.icon === 'x') ? Player.Selected = Player.p1 : Player.Selected = Player.p2;
+        document.querySelector('.grid').classList.add('icon-x');
+        document.querySelector('.grid').classList.remove('icon-o');
+        _boardFull = false;
         _updateBoard();
     };
 
     function checkTie() {
         for(let i=0; i < 9; i++){
-            if(board[i] === "null"){
+            if(board[i] === "null" || _boardFull === true){
                 return false;
             }
         }
-        return _reset();
+        
+        document.querySelector('.tie').classList.remove('close'); 
+        setTimeout(() => document.querySelector('.tie').classList.add('tie-animation'), 10);
+        setTimeout(() => document.querySelector('.tie').classList.remove('tie-animation'), 500);
+        setTimeout(() => document.querySelector('.tie').classList.add('close'), 1000)
+        setTimeout(() => _slot.forEach(slot => slot.classList.add('fade')), 1000)
+        setTimeout(() => _reset(), 2000)
     }
 
     function _checkVictory(){
@@ -140,8 +159,12 @@ const Gb = (function() {
         let boardCheck = (a, b, c) => board[a] === board[b] && board[b] === board[c] && board[a] != 'null';
 
         function validateVictory(){
+            _boardFull = true;
+
             (Player.Selected.name === Player.p1.name) ? Player.p1.points = ++Player.p1.points : Player.p2.points = ++Player.p2.points;
             document.querySelector('.grid').classList.add('event-disable');
+            document.querySelector('body').classList.add('no-cursor');
+            setTimeout(() => document.querySelector('body').classList.remove('no-cursor'), 3000);
             setTimeout(() => document.querySelector('.grid').classList.remove('event-disable'), 3000);
             setTimeout(_reset, 3000);
 
@@ -188,10 +211,7 @@ const Gb = (function() {
             }, 2000);
             
         }
-
     }
-
-
 })();
 
 

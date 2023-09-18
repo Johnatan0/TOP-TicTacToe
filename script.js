@@ -70,9 +70,15 @@ const Player = (function(){
         (Player.Selected.name === Player.p1.name) ? Player.Selected = Player.p2 : Player.Selected = Player.p1;
 
         if(Player.Selected.icon === 'x'){
+            document.querySelector('.player-turn').textContent = Player.Selected.name + ' TURN!'
+            document.querySelector('.turn').classList.remove('filled-o');
+            document.querySelector('.turn').classList.add('filled-x');
             document.querySelector('.grid').classList.add('icon-x');
-            document.querySelector('.grid').classList.remove('icon-o')
+            document.querySelector('.grid').classList.remove('icon-o');
         } else {
+            document.querySelector('.player-turn').textContent = Player.Selected.name + ' TURN!'
+            document.querySelector('.grid').classList.remove('filled-x');
+            document.querySelector('.turn').classList.add('filled-o');
             document.querySelector('.grid').classList.add('icon-o');
             document.querySelector('.grid').classList.remove('icon-x')
         }
@@ -126,12 +132,21 @@ const Gb = (function() {
         (Player.p1.icon === 'x') ? Player.Selected = Player.p1 : Player.Selected = Player.p2;
         document.querySelector('.grid').classList.remove('close');
         document.querySelector('h5').classList.add('close');
+        document.querySelector('.player-turn').textContent = Player.Selected.name + ' TURN!'
+        document.querySelector('.turn').classList.remove('filled-o');
+        document.querySelector('.turn').classList.add('filled-x');
+        document.querySelector('.grid').classList.add('icon-x');
+        document.querySelector('.grid').classList.remove('icon-o');
+        document.querySelector('.turn-board').classList.remove('close');
         _updateBoard();
     }
 
     function _reset() {
         for(let i=0; i<9; i++){board[i] = 'null'};
         (Player.p1.icon === 'x') ? Player.Selected = Player.p1 : Player.Selected = Player.p2;
+        document.querySelector('.player-turn').textContent = Player.Selected.name + ' TURN!'
+        document.querySelector('.turn').classList.remove('filled-o');
+        document.querySelector('.turn').classList.add('filled-x');
         document.querySelector('.grid').classList.add('icon-x');
         document.querySelector('.grid').classList.remove('icon-o');
         _boardFull = false;
@@ -199,6 +214,7 @@ const Gb = (function() {
             setTimeout(() => {
             document.querySelector('.grid').classList.add('close');
             document.querySelector('h5').classList.remove('close');
+            document.querySelector('.turn-board').classList.add('close');
             document.querySelector('h5').textContent = Player.p1.name + " won the match! 🎉🎉"
             }, 2500);
         }
@@ -207,6 +223,7 @@ const Gb = (function() {
             setTimeout(() => {
             document.querySelector('.grid').classList.add('close');
             document.querySelector('h5').classList.remove('close');
+            document.querySelector('.turn-board').classList.add('close');
             document.querySelector('h5').textContent = Player.p2.name + " won the match! 🎉🎉"
             }, 2000);
             

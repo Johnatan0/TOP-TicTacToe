@@ -146,8 +146,6 @@ const Gb = (function() {
         (Player.p1.icon === 'x') ? Player.Selected = Player.p1 : Player.Selected = Player.p2;
         document.querySelector('.player-turn').textContent = Player.Selected.name + ' TURN!'
         document.querySelector('.turn').classList.remove('filled-o');
-        document.querySelector('.turn').classList.add('filled-x');
-        document.querySelector('.grid').classList.add('icon-x');
         document.querySelector('.grid').classList.remove('icon-o');
         _boardFull = false;
         _updateBoard();
